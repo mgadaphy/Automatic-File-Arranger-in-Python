@@ -12,7 +12,7 @@ window.geometry("600x580")
 
 #Putting together various extensions
 EXT_AUDIOS = ['.wav','.mp3','.raw', '.wma']
-EXT_VIDEOS = ['.mp4','.m4a','.m4v','.fav','.f4a','.m4b','.m4r','.f4b','.mov','.avi','.wmv','.flv','.3gp','.webm']
+EXT_VIDEOS = ['.mp4','.m4a','.m4v','.fav','.f4a','.m4b','.mkv','.m4r','.f4b','.mov','.avi','.wmv','.flv','.3gp','.webm']
 EXT_IMAGES = ['.jpg','.jpeg','.png','.svg','.gif','.bmp']
 EXT_DOCUMENTS = ['.txt','.pdf','.doc','.docx','.xlsx','.xls','.ppt','pptx','.odt','.html','.csv','.chm','.xlsm']
 EXT_COMPRESSED = ['.rar','.zip','iso']
@@ -52,7 +52,7 @@ def createDirectory():
 
 #Creating the arranger function
 def arranger():
-    createDirectory()
+    # createDirectory()
     info1 = tk.Label(text="Starting the Automatic Process",font=("Times New Roman",12,"bold"),fg="orange")
     info1.grid(row=6,column=0)
     time.sleep(1)
@@ -60,28 +60,42 @@ def arranger():
         name, extension = os.path.splitext(f)
 
         if extension in EXT_IMAGES:
-            shutil.move(f,"./Images/{}".format(f))
+        	if not os.path.isdir('./{}'.format(DIRS[2])):
+        		os.mkdir('./{}'.format(DIRS[2]))
+        	shutil.move(f,"./Images/{}".format(f))
         elif extension in EXT_AUDIOS:
-            shutil.move(f,"./Audios/{}".format(f))
+        	if not os.path.isdir('./{}'.format(DIRS[0])):
+        		os.mkdir('./{}'.format(DIRS[0]))
+        	shutil.move(f,"./Audios/{}".format(f))
         elif extension in EXT_VIDEOS:
-            shutil.move(f,"./Videos/{}".format(f))
-        elif extension in EXT_IMAGES:
-            shutil.move(f,"./Images/{}".format(f))
+        	if not os.path.isdir('./{}'.format(DIRS[1])):
+        		os.mkdir('./{}'.format(DIRS[1]))
+        	shutil.move(f,"./Videos/{}".format(f))
         elif extension in EXT_DOCUMENTS:
-            shutil.move(f,"./Documents/{}".format(f))
+        	if not os.path.isdir('./{}'.format(DIRS[3])):
+        		os.mkdir('./{}'.format(DIRS[3]))
+        	shutil.move(f,"./Documents/{}".format(f))
         elif extension in EXT_PROGRAMS:
         	if (f.lower() != "automatic file arranger.exe") and (f != "arranger.exe"):
+        		if not os.path.isdir('./{}'.format(DIRS[5])):
+        			os.mkdir('./{}'.format(DIRS[5]))
         		shutil.move(f,"./Programs/{}".format(f))
             
         elif extension in EXT_COMPRESSED:
-            shutil.move(f,"./Compressed/{}".format(f))
+        	if not os.path.isdir('./{}'.format(DIRS[6])):
+        		os.mkdir('./{}'.format(DIRS[6]))
+        	shutil.move(f,"./Compressed/{}".format(f))
         else:
             if os.path.isdir(name):
                 if name not in DIRS:
-                    shutil.move(f,"./Folders/{}".format(f))
+                	if not os.path.isdir('./{}'.format(DIRS[4])):
+                		os.mkdir('./{}'.format(DIRS[4]))
+                	shutil.move(f,"./Folders/{}".format(f))
             else:
-                if  (f != "arranger.py") and (extension != '.lnk') and  (f != "automatic file arranger.py"):
-                    shutil.move(f,"./Others/{}".format(f))
+                if  (f != "arranger.py") and (extension != '.lnk')and (extension != '.ini')and (extension != '.db') and  (f != "automatic file arranger.py") and  (f != "file automata.py"):
+                	if not os.path.isdir('./{}'.format(DIRS[7])):
+                		os.mkdir('./{}'.format(DIRS[7]))
+                	shutil.move(f,"./Others/{}".format(f))
 
     info1 = tk.Label(text="DONE MOVING!!!\n",font=("Times New Roman",14,"bold"),bd=10, fg="green")
     info1.grid(row=9,column=0)
